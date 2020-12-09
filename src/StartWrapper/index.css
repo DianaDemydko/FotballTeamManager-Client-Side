@@ -1,0 +1,16 @@
+.start-button {
+    width: 20%;
+    border-radius: 30px;
+    padding: 10px;
+    border-color: white;
+    background-color: rgb(20, 139, 26);
+    color: white;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+}
+.main-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 15%;
+}
