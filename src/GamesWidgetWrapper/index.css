@@ -1,0 +1,19 @@
+.game-img {
+    width: 10rem !important;
+    display: flex;
+    align-self: center;
+}
+.card {
+    border: none !important;
+}
+.game-widget-button {
+    width: 100%;
+}
+.card-title {
+    font-size: larger !important;
+    text-align: center;
+}
+.card-text {
+    font-size: smaller !important;
+    text-align: center;
+}

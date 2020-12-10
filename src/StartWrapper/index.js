@@ -1,23 +1,16 @@
 
 import React from 'react';
 import './index.css';
-import {useState} from 'react';
+import Button from 'react-bootstrap/Button';
+import { useHistory } from 'react-router-dom';
 
 function StartWrapper() {
-    const [isStarted, setIsStarted] = useState(false);
+    const history = useHistory();
+    const goToHomePage = () => history.push('/home');
     return(
         <div className='main-content-wrapper'>
-            {!isStarted
-            ? 
-                <>
-                    <h1>Manage your football team</h1>
-                    <button className='start-button' onClick={() => setIsStarted(true)}><span>Start</span></button>
-                </>
-            :
-                <>
-                    <p>You are started!</p>
-                </>
-            }
+            <h1>Manage your football team</h1>
+            <Button variant="success" className="start-button" onClick={goToHomePage}>Start</Button>
         </div>
     );
 

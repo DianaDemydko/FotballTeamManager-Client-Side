@@ -1,0 +1,23 @@
+.team-widget-wrapper {
+    display: flex;
+    margin-right: 15%;
+}
+.team-img {
+    width: 10rem !important;
+    display: flex;
+    align-self: center;
+}
+.card {
+    border: none !important;
+}
+.team-widget-button {
+    width: 100%;
+}
+.card-title {
+    font-size: larger !important;
+    text-align: center;
+}
+.card-text {
+    font-size: smaller !important;
+    text-align: center;
+}
