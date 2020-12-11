@@ -1,0 +1,16 @@
+.team-games-label {
+    margin-bottom: 10px;
+    font-style: normal;
+    font-size: large;
+    font-weight: bold;
+}
+.team-comming-games-wrapper {
+    margin-top: 30px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+}
+.badge {
+    width: 100% !important;
+}

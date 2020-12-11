@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.spinner {
+  display: flex;
+  align-self: center;
+}
+.badge-label {
+  display: flex;
+  justify-content: center;
+}

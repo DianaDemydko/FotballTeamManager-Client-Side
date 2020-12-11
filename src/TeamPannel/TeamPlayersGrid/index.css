@@ -1,0 +1,16 @@
+.team-players-grid {
+    margin-top: 30px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+}
+.team-players-label {
+    margin-bottom: 10px;
+    font-style: normal;
+    font-size: large;
+    font-weight: bold;
+}
+.badge {
+    width: 100% !important;
+}

@@ -3,15 +3,10 @@ import './index.css';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import img from '../Images/team-img.png';
-import {useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 
-function TeamWidgetWrapper(props) {
-    const [performRedirect, setRedirect] = useState(false);
-    useEffect(() => {
-        if(performRedirect) {
-            props.moveToComponent();
-        }
-    }, [performRedirect]);
+function TeamWidgetWrapper() {
+    const history = useHistory();
     return(
         <div className='team-widget-wrapper'>
             <Card style={{ width: '30rem' }}>
@@ -21,7 +16,7 @@ function TeamWidgetWrapper(props) {
                     <Card.Text>
                     See and manage your players in selected team
                     </Card.Text>
-                    <Button className="team-widget-button" variant="outline-success" onClick={() => setRedirect(true)}>Go to Teams</Button>
+                    <Button className="team-widget-button" variant="outline-success" onClick={() => history.push('/teams')}>Go to Teams</Button>
                 </Card.Body>
             </Card>
         </div>

@@ -1,0 +1,11 @@
+.team-item-wrapper {
+    margin-top: 40px;
+}
+.edit-pencil-image {
+    display: flex;
+    justify-content: flex-end;
+}
+.pencil {
+    width: 2rem;
+    float: right;
+}
