@@ -8,19 +8,25 @@ import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
 import TeamInfo from '../TeamInfo/index';
 import editImage from '../../Images/edit-pencil.png';
+import TeamEditModal from '../TeamEditModal/index';
  
 function TeamItem({item: {id, name}}){
-    const [openTeamInfo, setOpen] = useState(false);
+    const [openTeamInfo, setOpenInfo] = useState(false);
+    const [openEditModal, setOpenModal] = useState(false);
     return(
         <div className='team-item-wrapper'>
-            <Button variant="info" size="lg" block onClick={() => setOpen(!openTeamInfo)}>
-                {name} <Image className='pencil' src={editImage}/>
-            </Button>
-           <Collapse in={openTeamInfo}>
+            <div className='team-item-btn-group'>
+                <Button variant="info" size="lg" block onClick={() => setOpenInfo(!openTeamInfo)}>
+                    {name}
+                </Button>
+                <Image className='pencil' src={editImage} onClick={()=> setOpenModal(true)}/>
+            </div>
+            <TeamEditModal show={openEditModal} onHide={()=>setOpenModal(false)} teamId={id} teamName={name} />
+            <Collapse in={openTeamInfo}>
                <div>
                    <TeamInfo teamId={id}/>
                </div>
-            </Collapse>
+             </Collapse>
         </div>
     );
 }

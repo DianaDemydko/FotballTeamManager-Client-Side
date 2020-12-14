@@ -45,3 +45,9 @@
   display: flex;
   justify-content: center;
 }
+
+.icon-img {
+  width: 1rem;
+  display: flex;
+  align-self: center;
+}

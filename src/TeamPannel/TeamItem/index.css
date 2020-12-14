@@ -6,6 +6,15 @@
     justify-content: flex-end;
 }
 .pencil {
-    width: 2rem;
+    width: 3rem;
     float: right;
+    background-color: #17a2b8;
+    cursor: pointer;
+}
+.btn {
+    border-radius: unset;
+}
+.team-item-btn-group {
+    display: flex;
+    flex-direction: row;
 }

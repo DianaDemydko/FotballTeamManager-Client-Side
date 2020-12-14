@@ -2,8 +2,7 @@
 import React from 'react';
 import './index.css';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useToasts, ToastProvider } from 'react-toast-notifications';
+import { useToasts } from 'react-toast-notifications';
 import Spinner from 'react-bootstrap/Spinner';
 import API from "../API";
 import TeamItem from './TeamItem/index';

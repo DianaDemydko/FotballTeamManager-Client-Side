@@ -8,10 +8,13 @@ import API from "../../API";
 import Table from 'react-bootstrap/Table';
 import PlayersGridRow from '../PlayersGridRow/index';
 import Badge from 'react-bootstrap/Badge';
+import addImg from '../../Images/add.png';
+import Image from 'react-bootstrap/Image';
 
-function TeamPlayersGrid({teamId}){
+function TeamPlayersGrid({teamId, editMode}){
     const [teamPlayers, setUsers] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const [isGridUpdated, setUpdated] = useState(false);
     const { addToast } = useToasts();
     useEffect(() => {
         async function LoadUsers(){
@@ -29,10 +32,17 @@ function TeamPlayersGrid({teamId}){
             });
         }
         LoadUsers();
-    }, [])
+    }, [isGridUpdated])
     return(
         <div className='team-players-grid'>
-        <div className='team-players-label'>Team Members:</div>
+        {editMode ?
+            <div className='team-players-label'>
+                <span className='team-players-label-text'>Edit Team Members:</span>
+                <Image src={addImg} className='icon-img add-player-btn' title="Add player to the Team" />
+            </div>
+            :
+            <div className='team-players-label'>Team Members:</div>
+        }
         { isLoading ? 
             <div className='spinner'>
                 <Spinner animation="border" variant="warning" />
@@ -47,14 +57,16 @@ function TeamPlayersGrid({teamId}){
                     <th>Name</th>
                     <th>Role</th>
                     <th>T-Shirt size</th>
+                    {editMode ? <th></th> : null}
                 </tr>
                 </thead>
                 <tbody>
                 {teamPlayers.map((player) => {
                     return(
-                    <PlayersGridRow player={player} key={player.id} />
+                    <PlayersGridRow player={player} key={player.id} editMode={editMode} updateGrid={() => setUpdated(!isGridUpdated)} />
                     );
                 })}
+
                 </tbody>
                 </Table>
             </>
