@@ -48,6 +48,6 @@
 
 .icon-img {
   width: 1rem;
-  display: flex;
-  align-self: center;
+  vertical-align: middle;
+  margin-left: 35%;
 }

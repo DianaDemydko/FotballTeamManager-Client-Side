@@ -13,6 +13,9 @@ import TeamPlayersGrid from '../TeamPlayersGrid/index';
 function TeamEditModal(props) {
     const {show, onHide, teamId, teamName} = props;
     const { addToast } = useToasts();
+    const saveChanges = () => {
+
+    }
     return(
         <Modal
             show={show}
@@ -37,7 +40,7 @@ function TeamEditModal(props) {
             </div>
         </Modal.Body>
         <Modal.Footer>
-            <Button>Save</Button>
+            <Button onClick={saveChanges}>Save</Button>
         </Modal.Footer>
         </Modal>
     );

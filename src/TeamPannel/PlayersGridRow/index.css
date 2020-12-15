@@ -2,4 +2,6 @@
     background-color: white;
     border-color: black;
     color: black;
+    border-radius: 10px;
+    width: 100%;
 }

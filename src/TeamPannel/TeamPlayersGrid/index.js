@@ -34,11 +34,12 @@ function TeamPlayersGrid({teamId, editMode}){
         LoadUsers();
     }, [isGridUpdated])
     return(
-        <div className='team-players-grid'>
+        <div className={editMode ? 'team-players-grid-edit' : 'team-players-grid'}>
         {editMode ?
             <div className='team-players-label'>
-                <span className='team-players-label-text'>Edit Team Members:</span>
-                <Image src={addImg} className='icon-img add-player-btn' title="Add player to the Team" />
+                <div className='team-players-label-text'>Edit Team Members:
+                    <Image src={addImg} className='icon-img add-player-btn' title="Add player to the Team" />
+                </div>
             </div>
             :
             <div className='team-players-label'>Team Members:</div>

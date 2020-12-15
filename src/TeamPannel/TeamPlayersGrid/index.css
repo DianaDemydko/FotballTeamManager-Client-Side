@@ -10,14 +10,12 @@
     font-style: normal;
     font-size: large;
     font-weight: bold;
-    display: flex;
-    flex-direction: row;
 }
 .badge {
     width: 100% !important;
 }
 .add-player-btn {
-    display: flex;
-    flex-direction: row;
-    align-self: end;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
 }

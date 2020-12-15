@@ -18,9 +18,7 @@ function PlayersGridRow({player, editMode, updateGrid}){
     const { addToast } = useToasts();
     const handleRoleChange = (selectedId) => {
         if(player.role.id !== parseInt(selectedId)){
-            player.modifyed = true;
-        } else {
-            player.modifyed = false;
+            
         }
         let selectedTeamRole = teamRoles.find(item => item.id === parseInt(selectedId));
         setSelectedRole(selectedTeamRole);
