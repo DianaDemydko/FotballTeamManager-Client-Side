@@ -3,6 +3,7 @@ import React from 'react';
 import './index.css';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
+import { useStore, useSelector, shallowEqual } from 'react-redux';
 
 function StartWrapper() {
     const history = useHistory();

@@ -7,29 +7,27 @@ import Spinner from 'react-bootstrap/Spinner';
 import API from "../API";
 import TeamItem from './TeamItem/index';
 import pannelIcon from '../Images/soccer-t-shirt.png';
+import { useSelector, useDispatch, useStore } from 'react-redux';
+import loadTeams from '../Actions/team.actions';
+import {getTeams, getTeamsPending, getTeamsError } from '../Redusers/team.reduser';
 
 function TeamPannel(){
-    const [teams, setTeams] = useState([]);
+    const teams = useSelector(state => state.teamReduser.teamsList);
+    const error = useSelector(state => state.teamReduser.error);
+    const pending = useSelector(state => state.teamReduser.pending);
     const [isLoading, setLoading] = useState(true);
     const { addToast } = useToasts();
+    const dispatch = useDispatch();
     useEffect(() => {
         async function LoadTeams(){
-            await API.get('https://localhost:44386/api/Teams/GetTeams')
-            .then(function (response) {
-                if(response.status === 200) {
-                    setTeams(response.data);
+            await dispatch(loadTeams()).then(() => {
                     setLoading(false);
-                }
-              })
-              .catch(function (error) {
-                addToast(`Internal server error: ${error}`, {
-                    appearance: 'error',
-                    autoDismiss: true,
-                  })
-              });
+            });
+            
+           
         }
         LoadTeams();
-    }, []);
+    }, [dispatch]);
     return(
         <>
             <div className='pannel-label'>
