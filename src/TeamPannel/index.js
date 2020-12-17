@@ -4,30 +4,34 @@ import './index.css';
 import { useState, useEffect } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import Spinner from 'react-bootstrap/Spinner';
-import API from "../API";
 import TeamItem from './TeamItem/index';
 import pannelIcon from '../Images/soccer-t-shirt.png';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch, useStore, shallowEqual} from 'react-redux';
 import loadTeams from '../Actions/team.actions';
-import {getTeams, getTeamsPending, getTeamsError } from '../Redusers/team.reduser';
 
 function TeamPannel(){
-    const teams = useSelector(state => state.teamReduser.teamsList);
-    const error = useSelector(state => state.teamReduser.error);
-    const pending = useSelector(state => state.teamReduser.pending);
+    const teams = useSelector(state => state.teamReduser.teamsList, shallowEqual);
+    const error = useSelector(state => state.teamReduser.error, shallowEqual);
     const [isLoading, setLoading] = useState(true);
     const { addToast } = useToasts();
     const dispatch = useDispatch();
     useEffect(() => {
         async function LoadTeams(){
             await dispatch(loadTeams()).then(() => {
-                    setLoading(false);
-            });
-            
-           
+               setLoading(false);     
+            }); 
         }
         LoadTeams();
-    }, [dispatch]);
+    }, [teams]);
+    useEffect(() => {
+        if(error !== null) {
+            addToast(`Internal server error: ${error}`, {
+                appearance: 'error',
+                autoDismiss: true,
+            });
+            setLoading(true);
+        }
+    }, [error]);
     return(
         <>
             <div className='pannel-label'>

@@ -13,7 +13,6 @@ import TeamEditModal from '../TeamEditModal/index';
 function TeamItem({item: {id, name}}){
     const [openTeamInfo, setOpenInfo] = useState(false);
     const [openEditModal, setOpenModal] = useState(false);
-    const [isTeamUpdated, setTeamUpdated] = useState(false);
     const onHideModalHandler = () => {
         setOpenModal(false);
         window.location.reload();
