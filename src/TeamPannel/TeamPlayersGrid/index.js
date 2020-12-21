@@ -13,13 +13,19 @@ import Image from 'react-bootstrap/Image';
 import { loadTeamRoles } from '../../Actions/team.actions';
 import { useSelector, useDispatch, useStore, shallowEqual} from 'react-redux';
 
-function TeamPlayersGrid({teamId, editMode}){
+function TeamPlayersGrid({teamId, editMode, applyChanges}){
     const [teamPlayers, setUsers] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [isGridUpdated, setUpdated] = useState(false);
     const teamRoles = useSelector(state => state.teamReduser.teamRoles, shallowEqual);
     const dispatch = useDispatch();
     const { addToast } = useToasts();
+    const changedPlayersData = (modifyedPlayerId, isRoleChanged, roleId) => {
+        let player = teamPlayers.find(item => item.id === modifyedPlayerId);
+        player.modifyed = isRoleChanged;
+        player.changedRoleId = roleId;
+        applyChanges(teamPlayers);
+    }
     useEffect(() => {
         async function LoadUsers(){
             await API.get(`https://localhost:44386/api/Teams/GetTeamMembers/${teamId}`)
@@ -50,7 +56,7 @@ function TeamPlayersGrid({teamId, editMode}){
         }
         LoadUsers();
         LoadTeamRoles();
-    }, [isGridUpdated, teamRoles])
+    }, [])
     return(
         <div className={editMode ? 'team-players-grid-edit' : 'team-players-grid'}>
         {editMode ?
@@ -82,7 +88,7 @@ function TeamPlayersGrid({teamId, editMode}){
                 <tbody>
                 {teamPlayers.map((player) => {
                     return(
-                    <PlayersGridRow player={player} key={player.id} editMode={editMode} teamRoles={teamRoles} updateGrid={() => setUpdated(!isGridUpdated)} />
+                    <PlayersGridRow player={player} key={player.id} editMode={editMode} teamRoles={teamRoles} updateGrid={() => setUpdated(!isGridUpdated)} applyChanges={changedPlayersData} />
                     );
                 })}
 

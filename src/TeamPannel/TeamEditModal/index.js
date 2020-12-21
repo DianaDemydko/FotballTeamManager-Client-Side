@@ -14,7 +14,10 @@ function TeamEditModal(props) {
     const {show, onHide, teamId, teamName} = props;
     const { addToast } = useToasts();
     const saveChanges = () => {
-
+        
+    }
+    const changedPlayersInfo = (teamPlayers) => {
+        console.log(teamPlayers);
     }
     return(
         <Modal
@@ -35,7 +38,7 @@ function TeamEditModal(props) {
                     </Form.Group>
                 </div>
                 <div className='edit-team-members-wrapper'>
-                    <TeamPlayersGrid teamId={teamId} editMode={true} />
+                    <TeamPlayersGrid teamId={teamId} editMode={true} applyChanges={changedPlayersInfo} />
                 </div>
             </div>
         </Modal.Body>
