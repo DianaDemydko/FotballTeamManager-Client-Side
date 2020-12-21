@@ -2,8 +2,7 @@ import {
     fetchTeamsPending, 
     fetchTeamsSuccess, 
     fetchTeamsError, 
-    fetchTeamMembers,
-    setSelectedTeam
+    fetchTeamRoles
 } from './Creators/team.actions.creator';
 
 import API from '../API';
@@ -23,23 +22,17 @@ export function loadTeams() {
     }
 }
 
-export function loadTeamMembers(teamId) {
+export function loadTeamRoles() {
     return async dispatch => {
         dispatch(fetchTeamsPending());
-        await API.get(`https://localhost:44386/api/Teams/GetTeamMembers/${teamId}`)
+        await API.get('https://localhost:44386/api/Teams/GetTeamRoles')
         .then((responce) => {
             if(responce.status === 200) {
-                dispatch(fetchTeamMembers(responce.data));
+                dispatch(fetchTeamRoles(responce.data));
             }
         })
         .catch((error) => {
             dispatch(fetchTeamsError(error));
-        })
-    }
-}
-
-export function setSelectedTeamId(teamId) {
-    return dispatch => {
-        dispatch(setSelectedTeam(teamId));
+        });
     }
 }

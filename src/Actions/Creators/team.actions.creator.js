@@ -2,8 +2,7 @@ import {
         FETCH_TEAMS_ERROR, 
         FETCH_TEAMS_PENDING, 
         FETCH_TEAMS_SUCCESS, 
-        FETCH_TEAM_MEMBERS, 
-        SET_SELECTED_TEAM 
+        FETCH_TEAM_ROLES
 } from '../Constants/team.action.type.constants';
 
 
@@ -27,16 +26,9 @@ export  function fetchTeamsError(error) {
     }
 }
 
-export function fetchTeamMembers(teamMembers) {
+export function fetchTeamRoles(teamRoles) {
     return {
-        type: FETCH_TEAM_MEMBERS,
-        teamMembers: teamMembers
-    }
-}
-
-export function setSelectedTeam(teamId) {
-    return {
-        type: SET_SELECTED_TEAM,
-        selectedTeamId: teamId
+        type: FETCH_TEAM_ROLES,
+        teamRoles: teamRoles
     }
 }

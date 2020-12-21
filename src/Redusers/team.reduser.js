@@ -2,17 +2,15 @@
 import { 
     FETCH_TEAMS_ERROR, 
     FETCH_TEAMS_PENDING, 
-    FETCH_TEAMS_SUCCESS, 
-    FETCH_TEAM_MEMBERS,
-    SET_SELECTED_TEAM
+    FETCH_TEAMS_SUCCESS,
+    FETCH_TEAM_ROLES
 } from '../Actions/Constants/team.action.type.constants';
 
 const initialState = {
     teamsList: [],
-    selectedTeamId: null,
-    selectedTeamMembers: [],
     pending: false,
-    error: null
+    error: null,
+    teamRoles: []
   };
   
   function teamReduser(state = initialState, action) {
@@ -34,16 +32,10 @@ const initialState = {
                 pending: true,
                 error: action.error
             }
-        case FETCH_TEAM_MEMBERS:
+        case FETCH_TEAM_ROLES:
             return {
                 ...state,
-                pending: false,
-                selectedTeamMembers: action.teamMembers
-            }
-        case SET_SELECTED_TEAM:
-            return {
-                ...state,
-                selectedTeamId: action.selectedTeamId
+                teamRoles: action.teamRoles
             }
         default: 
             return state;

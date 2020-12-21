@@ -6,8 +6,9 @@ import { useToasts } from 'react-toast-notifications';
 import Spinner from 'react-bootstrap/Spinner';
 import TeamItem from './TeamItem/index';
 import pannelIcon from '../Images/soccer-t-shirt.png';
+import Badge from 'react-bootstrap/Badge';
 import { useSelector, useDispatch, useStore, shallowEqual} from 'react-redux';
-import loadTeams from '../Actions/team.actions';
+import { loadTeams } from '../Actions/team.actions';
 
 function TeamPannel(){
     const teams = useSelector(state => state.teamReduser.teamsList, shallowEqual);
@@ -43,10 +44,12 @@ function TeamPannel(){
                 <div className='spinner'>
                     <Spinner animation="border" variant="warning" /> 
                 </div>
-            : 
+            : teams.length > 0 ? 
                 teams.map((team) => {
                     return <TeamItem item={team} key={team.id} />
                 })
+            :
+                <h4><Badge variant="primary">No Teams</Badge></h4>
             }
             </div>
         </>

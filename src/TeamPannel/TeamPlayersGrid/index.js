@@ -10,11 +10,15 @@ import PlayersGridRow from '../PlayersGridRow/index';
 import Badge from 'react-bootstrap/Badge';
 import addImg from '../../Images/add.png';
 import Image from 'react-bootstrap/Image';
+import { loadTeamRoles } from '../../Actions/team.actions';
+import { useSelector, useDispatch, useStore, shallowEqual} from 'react-redux';
 
 function TeamPlayersGrid({teamId, editMode}){
     const [teamPlayers, setUsers] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [isGridUpdated, setUpdated] = useState(false);
+    const teamRoles = useSelector(state => state.teamReduser.teamRoles, shallowEqual);
+    const dispatch = useDispatch();
     const { addToast } = useToasts();
     useEffect(() => {
         async function LoadUsers(){
@@ -31,8 +35,22 @@ function TeamPlayersGrid({teamId, editMode}){
                   })
             });
         }
+        async function LoadTeamRoles() {
+            if(editMode) {
+                await dispatch(loadTeamRoles())
+                .then(() => {
+                    setLoading(false);
+                }).catch(function(error){
+                    addToast(`Internal server error: ${error}`, {
+                        appearance: 'error',
+                        autoDismiss: true,
+                      })
+                });
+            }
+        }
         LoadUsers();
-    }, [isGridUpdated])
+        LoadTeamRoles();
+    }, [isGridUpdated, teamRoles])
     return(
         <div className={editMode ? 'team-players-grid-edit' : 'team-players-grid'}>
         {editMode ?
@@ -64,7 +82,7 @@ function TeamPlayersGrid({teamId, editMode}){
                 <tbody>
                 {teamPlayers.map((player) => {
                     return(
-                    <PlayersGridRow player={player} key={player.id} editMode={editMode} updateGrid={() => setUpdated(!isGridUpdated)} />
+                    <PlayersGridRow player={player} key={player.id} editMode={editMode} teamRoles={teamRoles} updateGrid={() => setUpdated(!isGridUpdated)} />
                     );
                 })}
 
