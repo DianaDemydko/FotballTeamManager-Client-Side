@@ -23,7 +23,7 @@ function TeamPannel(){
             }); 
         }
         LoadTeams();
-    }, [teams]);
+    }, []);
     useEffect(() => {
         if(error !== null) {
             addToast(`Internal server error: ${error}`, {

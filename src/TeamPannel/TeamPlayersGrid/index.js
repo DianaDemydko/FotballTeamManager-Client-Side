@@ -28,7 +28,7 @@ function TeamPlayersGrid({teamId, editMode, applyChanges}){
     }
     useEffect(() => {
         async function LoadUsers(){
-            await API.get(`https://localhost:44386/api/Teams/GetTeamMembers/${teamId}`)
+            await API.get(`https://localhost:5001/api/Teams/GetTeamMembers/${teamId}`)
             .then(function(response){
                 if(response.status === 200){
                     setUsers(response.data);

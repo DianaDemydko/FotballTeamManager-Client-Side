@@ -13,11 +13,29 @@ import TeamPlayersGrid from '../TeamPlayersGrid/index';
 function TeamEditModal(props) {
     const {show, onHide, teamId, teamName} = props;
     const { addToast } = useToasts();
+    const [teamPlayersToChange, setTeamPlayers] = useState({});
     const saveChanges = () => {
-        
+        teamPlayersToChange.map((player) => {
+            if(player.modifyed) {
+                    API.patch(`https://localhost:5001/api/Teams/ChangePlayerRole/${player.id}/${player.changedRoleId}`).then((responce) => {
+                    if(responce.status === 200) {
+                        addToast(`Player role was updated for ${player.name} ${player.surname}`, {
+                            appearance: 'success',
+                            autoDismiss: true,
+                        });
+                    }
+                })
+                .catch((err) => {
+                    addToast(`Internal server error while updating player role: ${err}`, {
+                        appearance: 'error',
+                        autoDismiss: true,
+                    });
+                })
+            }
+        })
     }
     const changedPlayersInfo = (teamPlayers) => {
-        console.log(teamPlayers);
+        setTeamPlayers(teamPlayers);
     }
     return(
         <Modal

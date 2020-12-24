@@ -24,7 +24,7 @@ function PlayersGridRow({player, editMode, teamRoles, updateGrid, applyChanges})
         }
     }
     const removePlayerFromTeam = async () => {
-        await API.patch(`https://localhost:44386/api/Teams/RemovePlayer/${player.id}`)
+        await API.patch(`https://localhost:5001/api/Teams/RemovePlayer/${player.id}`)
         .then((responce) => {
             if(responce.status === 200) {
                 addToast(`Success: You successfuly removed player from that team`, {
