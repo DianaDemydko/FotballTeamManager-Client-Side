@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import TeamItem from './TeamItem/index';
 import pannelIcon from '../Images/soccer-t-shirt.png';
 import { useSelector, useDispatch, useStore, shallowEqual} from 'react-redux';
-import loadTeams from '../Actions/team.actions';
+import { loadTeams } from '../Actions/team.actions';
 
 function TeamPannel(){
     const teams = useSelector(state => state.teamReduser.teamsList, shallowEqual);

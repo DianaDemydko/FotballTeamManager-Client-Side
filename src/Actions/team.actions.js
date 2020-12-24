@@ -39,7 +39,7 @@ export function loadTeamMembers(teamId) {
 }
 
 export function setSelectedTeamId(teamId) {
-    return dispatch => {
-        dispatch(setSelectedTeam(teamId));
+    return async dispatch => {
+        await dispatch(setSelectedTeam(teamId));
     }
 }
