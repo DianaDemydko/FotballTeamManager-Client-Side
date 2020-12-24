@@ -56,7 +56,7 @@ function TeamPlayersGrid({teamId, editMode, applyChanges}){
         }
         LoadUsers();
         LoadTeamRoles();
-    }, [])
+    }, [isGridUpdated])
     return(
         <div className={editMode ? 'team-players-grid-edit' : 'team-players-grid'}>
         {editMode ?

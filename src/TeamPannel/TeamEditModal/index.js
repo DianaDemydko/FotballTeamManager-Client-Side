@@ -8,6 +8,7 @@ import API from '../../API';
 import { useToasts, ToastProvider } from 'react-toast-notifications';
 import { FormGroup } from 'react-bootstrap';
 import TeamPlayersGrid from '../TeamPlayersGrid/index';
+import { isEmpty } from 'lodash';
 
 
 function TeamEditModal(props) {
@@ -15,24 +16,26 @@ function TeamEditModal(props) {
     const { addToast } = useToasts();
     const [teamPlayersToChange, setTeamPlayers] = useState({});
     const saveChanges = () => {
-        teamPlayersToChange.map((player) => {
-            if(player.modifyed) {
-                    API.patch(`https://localhost:5001/api/Teams/ChangePlayerRole/${player.id}/${player.changedRoleId}`).then((responce) => {
-                    if(responce.status === 200) {
-                        addToast(`Player role was updated for ${player.name} ${player.surname}`, {
-                            appearance: 'success',
+        if (!isEmpty(teamPlayersToChange)) {
+            teamPlayersToChange.map((player) => {
+                if(player.modifyed) {
+                        API.patch(`https://localhost:5001/api/Teams/ChangePlayerRole/${player.id}/${player.changedRoleId}`).then((responce) => {
+                        if(responce.status === 200) {
+                            addToast(`Player role was updated for ${player.name} ${player.surname}`, {
+                                appearance: 'success',
+                                autoDismiss: true,
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        addToast(`Internal server error while updating player role: ${err}`, {
+                            appearance: 'error',
                             autoDismiss: true,
                         });
-                    }
-                })
-                .catch((err) => {
-                    addToast(`Internal server error while updating player role: ${err}`, {
-                        appearance: 'error',
-                        autoDismiss: true,
-                    });
-                })
-            }
-        })
+                    })
+                }
+            });
+        }
     }
     const changedPlayersInfo = (teamPlayers) => {
         setTeamPlayers(teamPlayers);
