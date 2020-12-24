@@ -11,17 +11,17 @@ import { useToasts } from 'react-toast-notifications';
 import Spinner from 'react-bootstrap/Spinner';
 import swal from 'sweetalert';
 
-function PlayersGridRow({player, editMode, updateGrid}){
-    const [teamRoles, setTeamRoles] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+function PlayersGridRow({player, editMode, teamRoles, updateGrid, applyChanges}){
     const [selectedRole, setSelectedRole] = useState(player.role);
     const { addToast } = useToasts();
     const handleRoleChange = (selectedId) => {
-        if(player.role.id !== parseInt(selectedId)){
-            
-        }
         let selectedTeamRole = teamRoles.find(item => item.id === parseInt(selectedId));
         setSelectedRole(selectedTeamRole);
+        if(player.role.id !== parseInt(selectedId)){
+            applyChanges(player.id, true, parseInt(selectedId));
+        } else {
+            applyChanges(player.id, false, null);
+        }
     }
     const removePlayerFromTeam = async () => {
         await API.patch(`https://localhost:44386/api/Teams/RemovePlayer/${player.id}`)
@@ -54,60 +54,30 @@ function PlayersGridRow({player, editMode, updateGrid}){
             }
           });
     }
-    useEffect(() => {
-        async function LoadTeamRoles() {
-            await API.get('https://localhost:44386/api/Teams/GetTeamRoles')
-            .then((responce) => {
-                if(responce.status === 200) {
-                    setTeamRoles(responce.data);
-                    setLoading(false);
-                }
-            }).catch((error) => {
-                addToast(`Internal server error: ${error}`, {
-                    appearance: 'error',
-                    autoDismiss: true,
-                  });
-            });
-        }
-        if(editMode) {
-            LoadTeamRoles();
-        } else {
-            setLoading(false);
-        }
-    }, [editMode]);
     return(
         <>
-        {isLoading ?
-        
-            <div className='spinner'>
-                <Spinner animation="border" variant="warning" />
-            </div>
-             :
-            <>
-                {!editMode ? 
-                <tr>
-                    <td>{player.id}</td>
-                    <td>{player.name} {player.surname}</td>
-                    <td>{player.role.name}</td>
-                    <td>{player.tShirtSize ? <Badge variant="success" pill>{player.tShirtSize}</Badge> : <Badge variant="secondary" pill>Not Selected</Badge>}</td>
-                </tr>
-                : 
-                <tr>
-                    <td>{player.id}</td>
-                    <td>{player.name} {player.surname}</td>
-                    <td>
-                    <DropdownButton title={selectedRole.name} id='role-dropdown'>
-                        {teamRoles.map((role) => {
-                            return <Dropdown.Item eventKey={role.id} key={role.id} active={selectedRole.id === role.id ? true : false} onSelect={handleRoleChange}>{role.name}</Dropdown.Item>
-                        })}
-                    </DropdownButton>
-                    </td>
-                    <td>{player.tShirtSize ? <Badge variant="success" pill>{player.tShirtSize}</Badge> : <Badge variant="secondary" pill>Not Selected</Badge>}</td>
-                    {editMode ? <td><Image src={deleteImg} className='icon-img' title='Remove player from Team' onClick={removePlayerHandler} /></td> : null}
-                </tr>  
-                }
-            </>
-        }
+            {!editMode ? 
+            <tr>
+                <td>{player.id}</td>
+                <td>{player.name} {player.surname}</td>
+                <td>{player.role.name}</td>
+                <td>{player.tShirtSize ? <Badge variant="success" pill>{player.tShirtSize}</Badge> : <Badge variant="secondary" pill>Not Selected</Badge>}</td>
+            </tr>
+            : 
+            <tr>
+                <td>{player.id}</td>
+                <td>{player.name} {player.surname}</td>
+                <td>
+                <DropdownButton title={selectedRole.name} id='role-dropdown'>
+                    {teamRoles.map((role) => {
+                        return <Dropdown.Item eventKey={role.id} key={role.id} active={selectedRole.id === role.id ? true : false} onSelect={handleRoleChange}>{role.name}</Dropdown.Item>
+                    })}
+                </DropdownButton>
+                </td>
+                <td>{player.tShirtSize ? <Badge variant="success" pill>{player.tShirtSize}</Badge> : <Badge variant="secondary" pill>Not Selected</Badge>}</td>
+                {editMode ? <td><Image src={deleteImg} className='icon-img' title='Remove player from Team' onClick={removePlayerHandler} /></td> : null}
+            </tr>  
+            }
         </>
     );
 }
