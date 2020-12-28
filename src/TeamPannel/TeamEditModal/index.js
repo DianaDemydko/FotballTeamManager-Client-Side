@@ -9,56 +9,62 @@ import { useToasts, ToastProvider } from 'react-toast-notifications';
 import { FormGroup } from 'react-bootstrap';
 import TeamPlayersGrid from '../TeamPlayersGrid/index';
 import { isEmpty } from 'lodash';
+import { Provider } from 'react-redux';
 
 
 function TeamEditModal(props) {
-    const {show, onHide, teamId, teamName} = props;
+    const {show, onHide, teamId, teamName, updateTeamItem} = props;
     const [updatedTeamName, setTeamName] = useState(teamName);
     const { addToast } = useToasts();
     const [teamPlayersToChange, setTeamPlayers] = useState({});
     const saveChanges = () => {
-        if(teamName !== updatedTeamName && !isEmpty(updatedTeamName)) {
-            API.patch(`https://localhost:5001/api/Teams/ChangeTeamName/${teamId}/${updatedTeamName}`)
-            .then((response) => {
-                if(response.status === 200) {
-                    addToast(`Team name was updated`, {
-                        appearance: 'success',
-                        autoDismiss: true,
-                    });
-                }
-            })
-            .catch((error) => {
-                addToast(`Internal server error while updating team name: ${error}`, {
-                    appearance: 'error',
-                    autoDismiss: true,
-                });
-            });
+        let promisesArray = [];
+        let toastMessages = [];
+        if(!isEmpty(updatedTeamName)) {
+            if(teamName !== updatedTeamName) {
+                const teamNameUpdatePromise = API.patch(`https://localhost:5001/api/Teams/ChangeTeamName/${teamId}/${updatedTeamName}`);
+                toastMessages.push('Team name was updated');
+                promisesArray.push(teamNameUpdatePromise);
+            }
         } else {
             addToast(`Team name cannot be empty`, {
-                appearance: 'warning',
-                autoDismiss: true,
+                    appearance: 'warning',
+                    autoDismiss: true,
             });
         }
         if (!isEmpty(teamPlayersToChange)) {
             teamPlayersToChange.map((player) => {
                 if(player.modifyed) {
-                        API.patch(`https://localhost:5001/api/Teams/ChangePlayerRole/${player.id}/${player.changedRoleId}`).then((response) => {
-                        if(response.status === 200) {
-                            addToast(`Player role was updated for ${player.name} ${player.surname}`, {
-                                appearance: 'success',
-                                autoDismiss: true,
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        addToast(`Internal server error while updating player role: ${err}`, {
-                            appearance: 'error',
-                            autoDismiss: true,
-                        });
-                    })
+                    promisesArray.push(API.patch(`https://localhost:5001/api/Teams/ChangePlayerRole/${player.id}/${player.changedRoleId}`));
+                    toastMessages.push(`Player role was updated for ${player.name} ${player.surname}`);
                 }
             });
         }
+        Promise.all(promisesArray)
+        .then((response) => {
+            let passCheck = true;
+            response.forEach((promise) => {
+                if(promise.status !== 200) {
+                    passCheck = false;
+                }
+            });
+            if(passCheck) {
+                toastMessages.map((message) => {
+                    addToast(message, {
+                        appearance: 'success',
+                        autoDismiss: true,
+                    });
+                });
+                closeModal();
+                setTeamPlayers({});
+            }
+        })
+        .catch((error) => {
+            addToast(`Internal server error while provide updating: ${error}`, {
+                appearance: 'error',
+                autoDismiss: true,
+            });
+        });
     }
     const teamNameChangehandler = (event) => {
         setTeamName(event.target.value);
@@ -66,10 +72,14 @@ function TeamEditModal(props) {
     const changedPlayersInfo = (teamPlayers) => {
         setTeamPlayers(teamPlayers);
     }
+    const closeModal = () => {
+        updateTeamItem();
+        onHide();
+    }
     return(
         <Modal
             show={show}
-            onHide={onHide}
+            onHide={closeModal}
             size="lg"
             aria-labelledby="team-edit-modal"
             centered

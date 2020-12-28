@@ -11,12 +11,17 @@ import editImage from '../../Images/edit-pencil.png';
 import TeamEditModal from '../TeamEditModal/index';
 import { useSelector, useDispatch, useStore, shallowEqual} from 'react-redux';
  
-function TeamItem({item: {id, name}}){
+function TeamItem({item: {id, name}, updatePannel}){
     const [openTeamInfo, setOpenInfo] = useState(false);
     const [openEditModal, setOpenModal] = useState(false);
+    const [isUpdateIteam, setUpdate] = useState(false);
+    const updateTeamItem = () => {
+        setUpdate(!isUpdateIteam);
+        updatePannel();
+        setOpenInfo(false);
+    }
     const onHideModalHandler = () => {
         setOpenModal(false);
-        window.location.reload();
     }
     return(
         <div className='team-item-wrapper'>
@@ -26,10 +31,10 @@ function TeamItem({item: {id, name}}){
                 </Button>
                 <Image className='pencil' src={editImage} onClick={()=> setOpenModal(true)}/>
             </div>
-            <TeamEditModal show={openEditModal} onHide={()=>onHideModalHandler()} teamId={id} teamName={name} />
+            <TeamEditModal show={openEditModal} onHide={onHideModalHandler} teamId={id} teamName={name} updateTeamItem={updateTeamItem} />
             <Collapse in={openTeamInfo}>
                <div>
-                   <TeamInfo teamId={id}/>
+                   <TeamInfo teamId={id} />
                </div>
              </Collapse>
         </div>

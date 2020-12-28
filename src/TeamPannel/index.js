@@ -14,6 +14,7 @@ function TeamPannel(){
     const teams = useSelector(state => state.teamReduser.teamsList, shallowEqual);
     const error = useSelector(state => state.teamReduser.error, shallowEqual);
     const [isLoading, setLoading] = useState(true);
+    const [isUpdatePannel, setUpdatePannel] = useState(false);
     const { addToast } = useToasts();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -23,7 +24,7 @@ function TeamPannel(){
             }); 
         }
         LoadTeams();
-    }, []);
+    }, [isUpdatePannel]);
     useEffect(() => {
         if(error !== null) {
             addToast(`Internal server error: ${error}`, {
@@ -33,6 +34,9 @@ function TeamPannel(){
             setLoading(true);
         }
     }, [error]);
+    const updatePannel = () => {
+        setUpdatePannel(!isUpdatePannel);
+    }
     return(
         <>
             <div className='pannel-label'>
@@ -46,7 +50,7 @@ function TeamPannel(){
                 </div>
             : teams.length > 0 ? 
                 teams.map((team) => {
-                    return <TeamItem item={team} key={team.id} />
+                    return <TeamItem item={team} key={team.id} updatePannel={updatePannel} />
                 })
             :
                 <h4><Badge variant="primary">No Teams</Badge></h4>

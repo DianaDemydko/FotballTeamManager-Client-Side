@@ -15,7 +15,7 @@ function TeamInfo({teamId}){
                 <div className='team-logo-label'>Team Logo:</div>
                 <Image src={teamIcon} roundedCircle />
             </div>
-            <TeamPlayersGrid teamId={teamId} editMode={false}/>
+            <TeamPlayersGrid teamId={teamId} editMode={false} />
             <TeamCommingGames teamId={teamId} />
         </div>
     );
