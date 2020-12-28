@@ -2,6 +2,7 @@ import React from 'react';
 import WorkWidgetsWrapper from './WorkWidgetsWrapper/index'
 import StartWrapper from './StartWrapper/index'
 import TeamPannel from './TeamPannel/index'
+import GamePannel from './GamePannel/index'
 import { BrowserRouter as Router, Switch, Route, withRouter} from 'react-router-dom'
 
 export default function Routes(){
@@ -11,6 +12,7 @@ export default function Routes(){
                 <Route path='/' exact component={StartWrapper} />
                 <Route path='/home' exact component={WorkWidgetsWrapper} />
                 <Route path='/teams' exact component={TeamPannel} />
+                <Route path='/games' exact component={GamePannel} />
             </Switch>
         </Router>
     );
