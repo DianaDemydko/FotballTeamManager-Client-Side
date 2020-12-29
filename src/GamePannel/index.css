@@ -28,3 +28,6 @@
     background-color: rgb(255, 196, 0) !important;
     box-shadow: none !important;
 }
+.rbc-toolbar-label {
+    margin-right: 10%;
+}
