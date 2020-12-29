@@ -1,7 +1,8 @@
 import React from 'react';
 import { Calendar, momentLocalizer  } from 'react-big-calendar' 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import moment from 'moment'
+import moment from 'moment';
+import './index.css';
 const localizer = momentLocalizer(moment);
 const events = [
     {
@@ -20,12 +21,13 @@ const events = [
 
 function GamePannel() {
     return (
-        <div style={{ height: 700 }}>
+        <div className='calendar-wrapper'>
            <Calendar 
                 localizer={localizer} 
                 events={events}
                 step={60}
-                defaultDate={new Date(2020, 12, 12)}
+                view={'month'}
+                onView={() => {}}
             />
         </div>
     );

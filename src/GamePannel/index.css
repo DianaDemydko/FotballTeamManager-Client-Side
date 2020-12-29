@@ -1,0 +1,30 @@
+.calendar-wrapper {
+    margin-top: 4%;
+    margin-left: 6%;
+    margin-right: 6%;
+    height: 700px;
+}
+
+.rbc-off-range-bg {
+    background-color: rgb(233, 233, 233);
+}
+.rbc-today {
+    background-color: rgb(221, 255, 212);
+}
+.rbc-event {
+    background-color: rgb(255, 196, 0);
+    color: black;
+}
+.rbc-toolbar-label {
+    color: rgb(255, 196, 0);
+    font-weight: bolder;
+    font-size: x-large;
+}
+.rbc-btn-group button {
+    border-color: rgb(255, 196, 0) !important;
+}
+
+.rbc-btn-group button:hover, .rbc-active {
+    background-color: rgb(255, 196, 0) !important;
+    box-shadow: none !important;
+}
