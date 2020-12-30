@@ -6,7 +6,7 @@ import {
 
 import API from '../API';
 
-export function LoadGames() {
+export function loadGames() {
     return async dispatch => {
         dispatch(fetchGamesPending());
         await API.get('https://localhost:5001/api/Game/GetGames')
